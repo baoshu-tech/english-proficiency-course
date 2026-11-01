@@ -245,6 +245,22 @@ body{padding-bottom:calc(79px + env(safe-area-inset-bottom))}.mobile-bottom-nav{
  text-align:left!important;letter-spacing:0;margin:10px 0!important;
 }
 }
+
+@media(max-width:760px){
+.mobile-side-toggle{display:none!important}
+.view:not([hidden]) .mobile-sections,.view:not([hidden]) .mobile-sections.side-open,#journey:not([hidden]) .mobile-sections{
+ display:flex!important;position:fixed;top:auto;bottom:var(--main-nav-height,calc(61px + env(safe-area-inset-bottom)));left:0;right:0;width:100%;max-height:none;
+ box-sizing:border-box;gap:6px;padding:8px 12px;margin:0;border:0;border-radius:0;background:#591323;box-shadow:0 -4px 18px #59132312;backdrop-filter:none;
+ overflow-x:auto;overflow-y:hidden;scrollbar-width:none;z-index:149;scroll-padding-inline:12px;
+}
+.mobile-sections::-webkit-scrollbar{display:none}
+.mobile-sections button{flex:0 0 auto;white-space:nowrap;min-height:34px;padding:7px 14px;font-size:12px;line-height:20px;border:0;border-radius:18px;background:transparent;color:#f5dfe4;box-shadow:none}
+.mobile-sections button[aria-selected=true]{background:#b72a43;color:#fff;box-shadow:0 3px 10px #300a1626}
+.view:has(.mobile-sections)>section{padding-top:20px}
+.view:has(.mobile-sections)>section>.eyebrow{margin-top:0}
+body:has(.view:not([hidden]) .mobile-sections){padding-bottom:calc(var(--main-nav-height,80px) + 66px)}
+.mobile-bottom-nav{border-radius:0}
+}
 </style><meta property="og:type" content="website">
 <meta property="og:title" content="国际英语能力课程 · 课程与师资指南">
 <meta property="og:description" content="从0基础到雅思入门，练出英语真能力！">
@@ -333,4 +349,6 @@ function advance(){if(selected<5){show(selected+1);timer=setTimeout(advance,2400
 (()=>{const mobile=matchMedia('(max-width:760px)'),items=[...document.querySelectorAll('.stage-slide,.feedback-photo-slide,#textbook-system .textbook-card')];const observer=new IntersectionObserver(entries=>entries.forEach(e=>e.target.classList.toggle('mobile-content-revealed',mobile.matches&&e.isIntersecting)),{threshold:.06});items.forEach(e=>observer.observe(e));mobile.addEventListener('change',()=>items.forEach(e=>{e.classList.remove('mobile-content-revealed');observer.unobserve(e);observer.observe(e)}));})();
 </script><script>
 (()=>{const levels=document.getElementById('levels');if(!levels)return;const mobile=matchMedia('(max-width:760px)');[...levels.children].forEach((button,index)=>button.style.setProperty('--level-enter-order',index));const observer=new IntersectionObserver(entries=>entries.forEach(entry=>levels.classList.toggle('mobile-levels-visible',mobile.matches&&entry.isIntersecting)),{threshold:.1});observer.observe(levels);mobile.addEventListener('change',()=>{levels.classList.remove('mobile-levels-visible');observer.unobserve(levels);observer.observe(levels)});})();
+</script><script>
+(()=>{const mobile=matchMedia('(max-width:760px)'),nav=document.querySelector('.mobile-bottom-nav');function size(){if(nav&&mobile.matches)document.documentElement.style.setProperty('--main-nav-height',nav.getBoundingClientRect().height+'px')}if(nav)new ResizeObserver(size).observe(nav);size();document.querySelectorAll('[data-mobile-section]').forEach(button=>button.addEventListener('click',()=>{if(!mobile.matches)return;const menu=button.closest('.mobile-sections');menu.scrollTo({left:Math.max(0,button.offsetLeft-(menu.clientWidth-button.offsetWidth)/2),behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'instant':'smooth'})}));})();
 </script></body></html>
